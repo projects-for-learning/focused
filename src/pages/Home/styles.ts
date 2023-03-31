@@ -96,8 +96,13 @@ export const StartCounterButton = styled.div`
     outline: 0;
     cursor: pointer;
     transition: background-color 0.1s;
+
+    &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
     
-    &:hover {
+    &:not(:disabled):hover {
       background-color: ${(props) => props.theme["blue-500"]};
       border-bottom: 6px solid ${(props) => props.theme["blue-300"]};
     }
