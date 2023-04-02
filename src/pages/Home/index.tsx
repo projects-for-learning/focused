@@ -6,6 +6,8 @@ import {
   InputTaskName,
   InputCounter,
   StartCounterButton,
+  StartCounterButtonContainer,
+  InterruptedCounterButton,
 } from "./styles";
 
 import zod from "zod";
@@ -96,6 +98,10 @@ export function Home() {
     reset();
   }
 
+  function handleInterruptedCycle() {
+    //finalizar 
+  }
+
   return (
     <HomeContainer>
       <form action="" onSubmit={handleSubmit(handleCreateNewTask)}>
@@ -128,11 +134,17 @@ export function Home() {
           <span>{seconds[1]}</span>
         </CountdownContainer>
 
-        <StartCounterButton>
-          <button type="submit" disabled={isSubmitDisabled}>
-            start
-          </button>
-        </StartCounterButton>
+        <StartCounterButtonContainer>
+          {activeCycle ? (
+            <InterruptedCounterButton onClick={handleInterruptedCycle}>
+              interrupted
+            </InterruptedCounterButton>
+          ) : (
+            <StartCounterButton type="submit" disabled={isSubmitDisabled}>
+              start
+            </StartCounterButton>
+          )}
+        </StartCounterButtonContainer>
       </form>
     </HomeContainer>
   );

@@ -78,33 +78,47 @@ export const CountdownContainer = styled.div`
   }
 `;
 
-export const StartCounterButton = styled.div`
-  display: flex;
-  justify-content: center;
+const ButtonBase = styled.button`
+  width: 20rem;
+  padding: 0.8rem 0;
+  border: 0;
+  border-radius: 8px;
+  color: ${(props) => props.theme["white"]};
+  font-size: 2rem;
+  font-weight: bold;
+  letter-spacing: 3px;
+  outline: 0;
+  cursor: pointer;
+  transition: background-color 0.1s;
 
-  button {
-    width: 20rem;
-    padding: 0.8rem 0;
-    border: 0;
-    border-bottom: 6px solid ${(props) => props.theme["blue-500"]};
-    border-radius: 8px;
-    background-color: ${(props) => props.theme["blue-300"]};
-    color: ${(props) => props.theme["white"]};
-    font-size: 2rem;
-    font-weight: bold;
-    letter-spacing: 3px;
-    outline: 0;
-    cursor: pointer;
-    transition: background-color 0.1s;
-
-    &:disabled {
+  &:disabled {
     opacity: 0.7;
     cursor: not-allowed;
   }
-    
-    &:not(:disabled):hover {
-      background-color: ${(props) => props.theme["blue-500"]};
-      border-bottom: 6px solid ${(props) => props.theme["blue-300"]};
-    }
-  }
 `;
+
+export const StartCounterButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+    
+`;
+
+export const StartCounterButton = styled(ButtonBase)`
+  background-color: ${(props) => props.theme["blue-300"]};
+  border-bottom: 6px solid ${(props) => props.theme["blue-500"]};
+
+  &:not(:disabled):hover {
+    background-color: ${(props) => props.theme["blue-500"]};
+    border-bottom: 6px solid ${(props) => props.theme["blue-300"]};
+  }
+`
+
+export const InterruptedCounterButton = styled(ButtonBase)`
+  background-color: ${(props) => props.theme["red-500"]};
+  border-bottom: 6px solid ${(props) => props.theme["red-700"]};
+
+  &:not(:disabled):hover {
+    background-color: ${(props) => props.theme["red-700"]};
+    border-bottom: 6px solid ${(props) => props.theme["red-500"]};
+  }
+`
