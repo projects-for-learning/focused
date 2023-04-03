@@ -19,7 +19,7 @@ const newCycleFormValidationSchema = zod.object({
   taskName: zod.string().min(1, "inform a task"),
   taskMinutes: zod
     .number()
-    .min(5, "The cycle must be at least 5 minutes.")
+    .min(1, "The cycle must be at least 5 minutes.")
     .max(60, "The cycle must be a maximum of 60 minutes"),
 });
 
@@ -30,6 +30,8 @@ interface Cycle {
   task: string;
   minutes: number;
   startDate: Date;
+  interruptedDate?: Date;
+  finishedDate?: Date;
 }
 
 export function Home() {
@@ -46,24 +48,42 @@ export function Home() {
   });
 
   const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId);
+  const totalSeconds = activeCycle ? activeCycle.minutes * 60 : 0;
 
   useEffect(() => {
     let interval: number;
 
     if (activeCycle) {
       interval = setInterval(() => {
-        setAmountSecondsPassed(
-          differenceInSeconds(new Date(), activeCycle.startDate)
+        const secondsDifference = differenceInSeconds(
+          new Date(),
+          activeCycle.startDate
         );
+
+        if (secondsDifference > totalSeconds) {
+          setCycles((state) =>
+            state.map((cycle) => {
+              if (cycle.id === activeCycleId) {
+                return { ...cycle, finishedDaten: new Date() };
+              } else {
+                return cycle;
+              }
+            })
+          );
+
+          setActiveCycleId(null);
+          clearInterval(interval);
+        } else {
+          setAmountSecondsPassed(secondsDifference);
+        }
       }, 1000);
     }
 
     return () => {
       clearInterval(interval);
     };
-  }, [activeCycle]);
+  }, [activeCycle, totalSeconds, activeCycleId]);
 
-  const totalSeconds = activeCycle ? activeCycle.minutes * 60 : 0;
   const currentSeconds = activeCycle ? totalSeconds - amountSecondsPassed : 0;
 
   const minutesAmount = Math.floor(currentSeconds / 60);
@@ -99,7 +119,17 @@ export function Home() {
   }
 
   function handleInterruptedCycle() {
-    //finalizar 
+    setCycles((state) =>
+      state.map((cycle) => {
+        if (cycle.id === activeCycleId) {
+          return { ...cycle, interruptedDate: new Date() };
+        } else {
+          return cycle;
+        }
+      })
+    );
+
+    setActiveCycleId(null);
   }
 
   return (
@@ -111,6 +141,7 @@ export function Home() {
             type="text"
             id="taskName"
             placeholder="your task"
+            disabled={!!activeCycle}
             {...register("taskName")}
           />
 
@@ -119,9 +150,10 @@ export function Home() {
             type="number"
             id="taskMinutes"
             placeholder="00"
-            min={5}
+            min={1}
             max={60}
             step={5}
+            disabled={!!activeCycle}
             {...register("taskMinutes", { valueAsNumber: true })}
           />
         </FormContainer>
