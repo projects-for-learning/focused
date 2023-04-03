@@ -30,6 +30,7 @@ interface Cycle {
   task: string;
   minutes: number;
   startDate: Date;
+  interruptedDate?: Date;
 }
 
 export function Home() {
@@ -99,7 +100,17 @@ export function Home() {
   }
 
   function handleInterruptedCycle() {
-    //finalizar 
+    setCycles(
+      cycles.map((cycle) => {
+        if (cycle.id === activeCycleId) {
+          return { ...cycle, interruptedDate: new Date() };
+        } else {
+          return cycle;
+        }
+      })
+    );
+
+    setActiveCycleId(null);
   }
 
   return (
@@ -111,6 +122,7 @@ export function Home() {
             type="text"
             id="taskName"
             placeholder="your task"
+            disabled={!!activeCycle}
             {...register("taskName")}
           />
 
@@ -122,6 +134,7 @@ export function Home() {
             min={5}
             max={60}
             step={5}
+            disabled={!!activeCycle}
             {...register("taskMinutes", { valueAsNumber: true })}
           />
         </FormContainer>
