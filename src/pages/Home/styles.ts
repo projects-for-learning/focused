@@ -5,79 +5,6 @@ export const HomeContainer = styled.div`
   margin-top: 10rem;
 `;
 
-const InputBase = styled.input`
-  background: transparent;
-  border: 0;
-  border-bottom: 1px solid ${(props) => props.theme["gray-500"]};
-  color: ${(props) => props.theme["gray-100"]};
-  font-weight: bold;
-  font-size: 1rem;
-  padding-left: 0.2rem;
-
-  &:focus {
-    box-shadow: none;
-    border-color: ${(props) => props.theme["blue-500"]};
-  }
-  &::placeholder {
-    color: ${(props) => props.theme["gray-500"]};
-  }
-
-  @media (max-width: 500px) {
-    display: flex;
-  }
-`;
-
-export const FormContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 0.5rem;
-  padding: 1rem 0;
-
-  label {
-    font-size: 1.1rem;
-    line-height: 1rem;
-  }
-
-  @media (max-width: 500px) {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-`;
-
-export const InputTaskName = styled(InputBase)`
-  flex: 1;
-
-  @media (max-width: 500px) {
-    width: 100%;
-  }
-`;
-
-export const InputCounter = styled(InputBase)`
-  width: 90px;
-`;
-
-export const CountdownContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 1rem 0;
-  padding: 0.5rem 0;
-
-  background: rgba(255, 255, 255, 0.14);
-  border-radius: 8px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(5.9px);
-  -webkit-backdrop-filter: blur(5.9px);
-
-  span {
-    font-size: 8rem;
-    padding: 0 0.4rem;
-  }
-`;
-
 const ButtonBase = styled.button`
   width: 20rem;
   padding: 0.8rem 0;
@@ -100,7 +27,6 @@ const ButtonBase = styled.button`
 export const StartCounterButtonContainer = styled.div`
   display: flex;
   justify-content: center;
-    
 `;
 
 export const StartCounterButton = styled(ButtonBase)`
@@ -111,7 +37,7 @@ export const StartCounterButton = styled(ButtonBase)`
     background-color: ${(props) => props.theme["blue-500"]};
     border-bottom: 6px solid ${(props) => props.theme["blue-300"]};
   }
-`
+`;
 
 export const InterruptedCounterButton = styled(ButtonBase)`
   background-color: ${(props) => props.theme["red-500"]};
@@ -121,4 +47,4 @@ export const InterruptedCounterButton = styled(ButtonBase)`
     background-color: ${(props) => props.theme["red-700"]};
     border-bottom: 6px solid ${(props) => props.theme["red-500"]};
   }
-`
+`;
