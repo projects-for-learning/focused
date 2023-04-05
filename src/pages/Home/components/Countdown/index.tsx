@@ -3,7 +3,7 @@ import { CountdownContainer } from "./styles";
 import { differenceInSeconds } from "date-fns";
 
 export function Countdown() {
-  const [amountSecondsPassed, setAmountSecondsPassed] = useState(0);
+ 
 
   const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId);
   const totalSeconds = activeCycle ? activeCycle.minutes * 60 : 0;

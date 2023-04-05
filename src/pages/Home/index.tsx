@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import {
   HomeContainer,
   StartCounterButton,
@@ -34,9 +34,9 @@ interface Cycle {
 
 export function Home() {
   const [cycles, setCycles] = useState<Cycle[]>([]);
-  const [activeCycleId, setActiveCycleId] = useState<string | null>(null);
+  
 
-  const { register, handleSubmit, watch, reset } = useForm<NewCycleFormData>({
+  const newCycleForm = useForm<NewCycleFormData>({
     resolver: zodResolver(newCycleFormValidationSchema),
     defaultValues: {
       taskName: "",
@@ -44,24 +44,13 @@ export function Home() {
     },
   });
 
+  const { register, handleSubmit, watch, reset } = newCycleForm
+
   const task = watch("taskName");
   const isSubmitDisabled = !task;
 
   function handleCreateNewTask(data: NewCycleFormData) {
-    const id = String(new Date().getTime());
-
-    const newCycle: Cycle = {
-      id,
-      task: data.taskName,
-      minutes: data.taskMinutes,
-      startDate: new Date(),
-    };
-
-    setCycles((state) => [...state, newCycle]);
-    setActiveCycleId(id);
-    setAmountSecondsPassed(0);
-
-    reset();
+    
   }
 
   function handleInterruptedCycle() {
@@ -81,7 +70,9 @@ export function Home() {
   return (
     <HomeContainer>
       <form action="" onSubmit={handleSubmit(handleCreateNewTask)}>
-        <NewCycleForm />
+        <FormProvider {...newCycleForm}>
+          <NewCycleForm />
+        </FormProvider>
         <Countdown />
 
         <StartCounterButtonContainer>

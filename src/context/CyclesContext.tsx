@@ -10,7 +10,10 @@ interface Cycle {
 }
 
 interface CyclesContextProps {
-    cycles: Cycle[]
+  cycles: Cycle[];
+  activeCycleId: string | null
+  amountSecondsPassed: number
+  createNewCycle: (cycle: Cycle) => void
 }
 
 interface CyclesContextProviderType {
@@ -22,14 +25,28 @@ export const CyclesContext = createContext({} as CyclesContextProps);
 export const CyclesContextProvider = ({
   children,
 }: CyclesContextProviderType) => {
-
   const [cycles, setCycles] = useState<Cycle[]>([]);
+  const [activeCycleId, setActiveCycleId] = useState<string | null>(null);
+  const [amountSecondsPassed, setAmountSecondsPassed] = useState(0);
 
-  
+  function createNewCycle(data: Cycle) {
+    const id = String(new Date().getTime());
 
-  return ( 
-    <CyclesContext.Provider value={{cycles}}>
-        {children}
+    const newCycle: Cycle = {
+      id,
+      task: data.task,
+      minutes: data.minutes,
+      startDate: new Date(),
+    };
+
+    setCycles((state) => [...state, newCycle]);
+    setActiveCycleId(id);
+    setAmountSecondsPassed(0);
+  }
+
+  return (
+    <CyclesContext.Provider value={{ cycles, activeCycleId, amountSecondsPassed, createNewCycle }}>
+      {children}
     </CyclesContext.Provider>
-  )
+  );
 };
