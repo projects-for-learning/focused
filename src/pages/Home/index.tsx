@@ -8,16 +8,17 @@ import {
 
 import zod from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { differenceInSeconds } from "date-fns";
 import NewCycleForm from "./components/NewCycleForm";
 import { Countdown } from "./components/Countdown";
+import { CyclesContext } from "../../context/CyclesContext";
 
 const newCycleFormValidationSchema = zod.object({
   taskName: zod.string().min(1, "inform a task"),
   taskMinutes: zod
     .number()
-    .min(1, "The cycle must be at least 5 minutes.")
+    .min(5, "The cycle must be at least 5 minutes.")
     .max(60, "The cycle must be a maximum of 60 minutes"),
 });
 
@@ -33,8 +34,7 @@ interface Cycle {
 }
 
 export function Home() {
-  const [cycles, setCycles] = useState<Cycle[]>([]);
-  
+  const { activeCycle, createNewCycle, interruptedCycle } = useContext(CyclesContext);
 
   const newCycleForm = useForm<NewCycleFormData>({
     resolver: zodResolver(newCycleFormValidationSchema),
@@ -44,27 +44,26 @@ export function Home() {
     },
   });
 
-  const { register, handleSubmit, watch, reset } = newCycleForm
+  const { register, handleSubmit, watch, reset } = newCycleForm;
 
   const task = watch("taskName");
   const isSubmitDisabled = !task;
 
   function handleCreateNewTask(data: NewCycleFormData) {
-    
+    const id = String(new Date().getTime());
+
+    const newCycle: Cycle = {
+      id,
+      task: data.taskName,
+      minutes: data.taskMinutes,
+      startDate: new Date(),
+    };
+
+    createNewCycle(newCycle);
   }
 
   function handleInterruptedCycle() {
-    setCycles((state) =>
-      state.map((cycle) => {
-        if (cycle.id === activeCycleId) {
-          return { ...cycle, interruptedDate: new Date() };
-        } else {
-          return cycle;
-        }
-      })
-    );
-
-    setActiveCycleId(null);
+    interruptedCycle()
   }
 
   return (
