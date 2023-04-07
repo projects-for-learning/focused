@@ -1,5 +1,6 @@
 import { ListChecks } from "phosphor-react";
 import { HeaderContainer } from "./styles";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
@@ -10,8 +11,12 @@ export default function Header() {
       </div>
 
       <nav>
-        <li><a href="/">Home</a></li>
-        <li><a href="/">History</a></li>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/history">History</Link>
+        </li>
       </nav>
     </HeaderContainer>
   );
