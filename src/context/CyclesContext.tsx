@@ -16,7 +16,7 @@ interface CyclesContextProps {
   createNewCycle: (cycle: Cycle) => void;
   interruptedCycle: () => void;
   finishedCycle: () => void;
-  setSecondsPassed: (second: number) => void
+  setSecondsPassed: (second: number) => void;
 }
 
 interface CyclesContextProviderType {
@@ -80,7 +80,7 @@ export const CyclesContextProvider = ({
   }
 
   function setSecondsPassed(second: number) {
-    setAmountSecondsPassed(second)
+    setAmountSecondsPassed(second);
   }
 
   return (
@@ -92,7 +92,7 @@ export const CyclesContextProvider = ({
         createNewCycle,
         interruptedCycle,
         finishedCycle,
-        setSecondsPassed
+        setSecondsPassed,
       }}
     >
       {children}
