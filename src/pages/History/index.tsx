@@ -7,6 +7,8 @@ import ptBR from "date-fns/locale/pt-BR";
 export function History() {
   const { cycles } = useContext(CyclesContext);
 
+  console.log(cycles)
+
   return (
     <HistoryContainer>
       <h1>My History</h1>
@@ -24,7 +26,7 @@ export function History() {
           <tbody>
             {cycles.map((cycle) => {
               return (
-                <tr>
+                <tr key={cycle.id}>
                   <td>{cycle.task}</td>
                   <td>{cycle.minutes} minutos</td>
                   <td>
