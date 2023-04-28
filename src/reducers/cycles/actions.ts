@@ -16,7 +16,7 @@ export function addNewCycle(newCycle: Cycle) {
 }
 
 export function interruptCurrentCycle() {
-  return {
+  return { 
     type: ActionsType.INTERRUPT_CURRENT_CYCLE,
   };
 }
