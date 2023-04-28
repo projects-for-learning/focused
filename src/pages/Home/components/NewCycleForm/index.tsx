@@ -16,7 +16,7 @@ export default function NewCycleForm() {
         id="taskName"
         placeholder="your task"
         disabled={!!activeCycle}
-        {...register("taskName")}
+        {...register("task")}
       />
 
       <label htmlFor="taskMinutes">during</label>
@@ -28,7 +28,7 @@ export default function NewCycleForm() {
         max={60}
         step={5}
         disabled={!!activeCycle}
-        {...register("taskMinutes", { valueAsNumber: true })}
+        {...register("minutes", { valueAsNumber: true })}
       />
     </FormContainer>
   );

@@ -15,8 +15,8 @@ import { Countdown } from "./components/Countdown";
 import { CyclesContext } from "../../context/CyclesContext";
 
 const newCycleFormValidationSchema = zod.object({
-  taskName: zod.string().min(1, "inform a task"),
-  taskMinutes: zod
+  task: zod.string().min(1, "inform a task"),
+  minutes: zod
     .number()
     .min(5, "The cycle must be at least 5 minutes.")
     .max(60, "The cycle must be a maximum of 60 minutes"),
@@ -24,42 +24,24 @@ const newCycleFormValidationSchema = zod.object({
 
 type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>;
 
-interface Cycle {
-  id: string;
-  task: string;
-  minutes: number;
-  startDate: Date;
-  interruptedDate?: Date;
-  finishedDate?: Date;
-}
-
 export function Home() {
   const { activeCycle, createNewCycle, interruptedCycle } = useContext(CyclesContext);
 
   const newCycleForm = useForm<NewCycleFormData>({
     resolver: zodResolver(newCycleFormValidationSchema),
     defaultValues: {
-      taskName: "",
-      taskMinutes: 0,
+      task: "",
+      minutes: 0,
     },
   });
 
   const { register, handleSubmit, watch, reset } = newCycleForm;
 
-  const task = watch("taskName");
+  const task = watch("task");
   const isSubmitDisabled = !task;
 
   function handleCreateNewTask(data: NewCycleFormData) {
-    const id = String(new Date().getTime());
-
-    const newCycle: Cycle = {
-      id,
-      task: data.taskName,
-      minutes: data.taskMinutes,
-      startDate: new Date(),
-    };
-
-    createNewCycle(newCycle);
+    createNewCycle(data);
   }
 
   function handleInterruptedCycle() {
