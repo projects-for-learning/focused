@@ -7,8 +7,6 @@ import ptBR from "date-fns/locale/pt-BR";
 export function History() {
   const { cycles } = useContext(CyclesContext);
 
-  console.log(cycles)
-
   return (
     <HistoryContainer>
       <h1>My History</h1>
@@ -16,9 +14,9 @@ export function History() {
         <table>
           <thead>
             <tr>
-              <th>Tarefa</th>
-              <th>Duração</th>
-              <th>Início</th>
+              <th>Task</th>
+              <th>Duration</th>
+              <th>Start</th>
               <th>Status</th>
             </tr>
           </thead>
@@ -28,11 +26,10 @@ export function History() {
               return (
                 <tr key={cycle.id}>
                   <td>{cycle.task}</td>
-                  <td>{cycle.minutes} minutos</td>
+                  <td>{cycle.minutes} minutes</td>
                   <td>
                     {formatDistanceToNow(new Date(cycle.startDate), {
                       addSuffix: true,
-                      locale: ptBR,
                     })}
                   </td>
                   <td>
