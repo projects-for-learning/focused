@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { CountdownContainer, SeparatorCountdown } from "./styles";
 import { differenceInSeconds } from "date-fns";
 import { CyclesContext } from "../../../../context/CyclesContext";
+import { soundFinishedCycle } from "../../../../utils";
 
 export function Countdown() {
   const { activeCycle, amountSecondsPassed, finishedCycle, setSecondsPassed } =
@@ -20,6 +21,7 @@ export function Countdown() {
         );
 
         if (secondsDifference > totalSeconds) {
+          soundFinishedCycle();
           finishedCycle();
           clearInterval(interval);
         } else {
