@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { CountdownContainer } from "./styles";
+import { CountdownContainer, SeparatorCountdown } from "./styles";
 import { differenceInSeconds } from "date-fns";
 import { CyclesContext } from "../../../../context/CyclesContext";
 
@@ -51,7 +51,7 @@ export function Countdown() {
     <CountdownContainer>
       <span>{minutes[0]}</span>
       <span>{minutes[1]}</span>
-      <span>:</span>
+      <SeparatorCountdown>:</SeparatorCountdown>
       <span>{seconds[0]}</span>
       <span>{seconds[1]}</span>
     </CountdownContainer>

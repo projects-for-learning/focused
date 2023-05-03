@@ -18,3 +18,8 @@ export const CountdownContainer = styled.div`
     padding: 0 0.4rem;
   }
 `;
+
+export const SeparatorCountdown = styled.span`
+  font-size: 8rem;
+  color: ${(props) => props.theme["blue-300"]};
+`;
