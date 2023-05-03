@@ -13,6 +13,7 @@ import { differenceInSeconds } from "date-fns";
 import NewCycleForm from "./components/NewCycleForm";
 import { Countdown } from "./components/Countdown";
 import { CyclesContext } from "../../context/CyclesContext";
+import { soundInterruptedCycle, soundStartCountdown } from "../../utils";
 
 const newCycleFormValidationSchema = zod.object({
   task: zod.string().min(1, "inform a task"),
@@ -25,7 +26,8 @@ const newCycleFormValidationSchema = zod.object({
 type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>;
 
 export function Home() {
-  const { activeCycle, createNewCycle, interruptedCycle } = useContext(CyclesContext);
+  const { activeCycle, createNewCycle, interruptedCycle } =
+    useContext(CyclesContext);
 
   const newCycleForm = useForm<NewCycleFormData>({
     resolver: zodResolver(newCycleFormValidationSchema),
@@ -42,10 +44,14 @@ export function Home() {
 
   function handleCreateNewTask(data: NewCycleFormData) {
     createNewCycle(data);
+
+    soundStartCountdown();
   }
 
   function handleInterruptedCycle() {
-    interruptedCycle()
+    interruptedCycle();
+
+    soundInterruptedCycle();
   }
 
   return (
