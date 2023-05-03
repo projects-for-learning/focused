@@ -3,6 +3,10 @@ import styled from "styled-components";
 export const HomeContainer = styled.div`
   padding: 0.5rem 1rem;
   margin-top: 10rem;
+
+  form {
+    margin-bottom: 2rem;
+  }
 `;
 
 const ButtonBase = styled.button`

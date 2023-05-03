@@ -14,6 +14,7 @@ import NewCycleForm from "./components/NewCycleForm";
 import { Countdown } from "./components/Countdown";
 import { CyclesContext } from "../../context/CyclesContext";
 import { soundInterruptedCycle, soundStartCountdown } from "../../utils";
+import { Status } from "./components/Status";
 
 const newCycleFormValidationSchema = zod.object({
   task: zod.string().min(1, "inform a task"),
@@ -44,7 +45,7 @@ export function Home() {
 
   function handleCreateNewTask(data: NewCycleFormData) {
     createNewCycle(data);
-    reset()
+    reset();
     soundStartCountdown();
   }
 
@@ -74,6 +75,8 @@ export function Home() {
           )}
         </StartCounterButtonContainer>
       </form>
+
+      {activeCycle && <Status task={activeCycle.task} />}
     </HomeContainer>
   );
 }
