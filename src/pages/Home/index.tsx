@@ -37,14 +37,14 @@ export function Home() {
     },
   });
 
-  const { register, handleSubmit, watch, reset } = newCycleForm;
+  const { handleSubmit, watch, reset } = newCycleForm;
 
   const task = watch("task");
   const isSubmitDisabled = !task;
 
   function handleCreateNewTask(data: NewCycleFormData) {
     createNewCycle(data);
-
+    reset()
     soundStartCountdown();
   }
 
